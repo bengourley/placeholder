@@ -5,7 +5,9 @@
   "license": "BSD",
   "dependencies": {
     "gm": "~1.4.2",
-    "express": "~3.0.0rc4"
+    "express": "~3.0.0rc4",
+    "jade": "~0.27.2",
+    "github-flavored-markdown": "~1.0.1"
   },
   "main": "app.js"
 }
