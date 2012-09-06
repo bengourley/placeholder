@@ -57,7 +57,7 @@ http:// [hostname]:[port]/[width]x[height] [format] [?query=params]
 
 - **width** - The desired image width.
 
-- **height** - The desired image height.
+- **height** - The desired image height. If left off, the resulting image will be square: {width} x {width}.
 
 - **format** - This can be `.png`, `.jpg` or `.gif`. It is optional and defaults to `.png`
 
@@ -77,6 +77,8 @@ text 'Placeholder'
 
 - `/500x100.png?color=000&textColor=fff` gets you a .png with white text
 and a black background
+
+- `/250` gets you a 250x250 image
 
 ## Author
 [Ben Gourley](http://github.com/bengourley)
