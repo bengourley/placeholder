@@ -9,7 +9,16 @@ var app = express()
 
 // Middleware
 app.use(express.logger('dev'))
-app.use(express.errorHandler())
+app.use(app.router)
+app.use(function errorHandler(err, req, res, next) {
+  if (err.code === 'ENOENT') {
+    res.status(404)
+    res.end('Not found')
+  } else {
+    res.status(500)
+    res.end(err.message)
+  }
+})
 
 // View settings
 app.set('view engine', 'jade')
@@ -37,7 +46,7 @@ app.get('/', function (req, res, next) {
 // Create an image
 app.get(/\/(\d+)(?:x((\d+)))?(.\w+)?/, function (req, res, next) {
 
-  var MAX_DIMENSION = 10000
+  var MAX_DIMENSION = 5000
     , width = req.params[0]
     , height = req.params[1] || width
     , colour = req.query.color || req.query.colour || 'ccc'
