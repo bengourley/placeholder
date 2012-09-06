@@ -37,12 +37,17 @@ app.get('/', function (req, res, next) {
 // Create an image
 app.get(/\/(\d+)(?:x((\d+)))?(.\w+)?/, function (req, res, next) {
 
-  var width = req.params[0]
+  var MAX_DIMENSION = 10000
+    , width = req.params[0]
     , height = req.params[1] || width
     , colour = req.query.color || req.query.colour || 'ccc'
     , text = req.query.text || (width + ' x ' + height)
     , textColour = req.query.textColor || req.query.textColour || '000'
     , format = getFormat(req.params[2])
+
+  if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+    return next(new Error('Maximum dimension exceeded (' + MAX_DIMENSION +')'))
+  }
 
   gm(width, height, '#' + colour)
     // Center the text
