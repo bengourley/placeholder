@@ -1,14 +1,21 @@
+// Deps
 var express = require('express')
   , gm = require('gm')
   , markdown = require('github-flavored-markdown').parse
   , fs = require('fs')
-  , app = express()
 
+// Create server
+var app = express()
+
+// Middleware
 app.use(express.logger('dev'))
 app.use(express.errorHandler())
+
+// View settings
 app.set('view engine', 'jade')
 app.set('views', __dirname + '/views')
 
+// Show the readme
 app.get('/', function (req, res, next) {
   fs.readFile(__dirname + '/Readme.md', 'utf-8', function (err, data) {
     if (err) return next(err)
@@ -16,6 +23,9 @@ app.get('/', function (req, res, next) {
   })
 })
 
+/*
+ * Sanitizes a file-type extension
+ */
 function getFormat(f) {
   switch (f) {
     case '.jpg': return 'jpeg'
@@ -24,10 +34,10 @@ function getFormat(f) {
   }
 }
 
-app.get(/\/(\d+)x(\d+)(.\w+)?/, function (req, res, next) {
+app.get(/\/(\d+)(?:x((\d+)))?(.\w+)?/, function (req, res, next) {
 
   var width = req.params[0]
-    , height = req.params[1]
+    , height = req.params[1] || width
     , colour = req.query.color || req.query.colour || 'ccc'
     , text = req.query.text || (width + ' x ' + height)
     , textColour = req.query.textColor || req.query.textColour || '000'
