@@ -51,4 +51,4 @@ app.get(/\/(\d+)x(\d+)(.\w+)?/, function (req, res, next) {
     })
 })
 
-app.listen(9999)
+app.listen(process.env.PORT || 9999)
