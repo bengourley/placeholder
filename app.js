@@ -15,14 +15,6 @@ app.use(express.errorHandler())
 app.set('view engine', 'jade')
 app.set('views', __dirname + '/views')
 
-// Show the readme
-app.get('/', function (req, res, next) {
-  fs.readFile(__dirname + '/Readme.md', 'utf-8', function (err, data) {
-    if (err) return next(err)
-    res.render('index', { readme: markdown(data) })
-  })
-})
-
 /*
  * Sanitizes a file-type extension
  */
@@ -34,6 +26,15 @@ function getFormat(f) {
   }
 }
 
+// Show the readme
+app.get('/', function (req, res, next) {
+  fs.readFile(__dirname + '/Readme.md', 'utf-8', function (err, data) {
+    if (err) return next(err)
+    res.render('index', { readme: markdown(data) })
+  })
+})
+
+// Create an image
 app.get(/\/(\d+)(?:x((\d+)))?(.\w+)?/, function (req, res, next) {
 
   var width = req.params[0]
@@ -44,24 +45,37 @@ app.get(/\/(\d+)(?:x((\d+)))?(.\w+)?/, function (req, res, next) {
     , format = getFormat(req.params[2])
 
   gm(width, height, '#' + colour)
+    // Center the text
     .gravity('Center')
+    // Background colour
     .fill('#' + textColour)
+    // Scale font-size according to image dimensions
     .pointSize(30 * (parseInt(Math.min(width, height), 10) / 200))
+    // Draw the text
     .drawText(0, 0, text)
-    .stream('png', function (err, stdout, stderr) {
+    // Get a readable stream of the image data
+    .stream(format, function (err, stdout, stderr) {
+      // Pass err to the error handling middleware
       if (err) return next(err)
+      // Set cache headers
       res.set(
         { 'Content-Type': 'image/' + format
         , 'Cache-Control': 'max-age=315360000,public'
         , 'Date': new Date().toUTCString()
         , 'Last-Modified': new Date().toUTCString()
         })
+      // Pipe image data stream to the response
       stdout.pipe(res)
+      // Pipe any stdout data to the process.stdout
+      // so that it can be retrieved in the logs
       stderr.pipe(process.stdout)
     })
 })
 
+// Start the server on the given port, or default to 9999
 var server = app.listen(process.env.PORT || 9999, function () {
+
+  // Output some useful info
 
   var address = 'http://' + server.address().address + ':' + server.address().port
 
