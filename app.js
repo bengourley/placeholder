@@ -14,6 +14,9 @@ app.use(function errorHandler(err, req, res, next) {
   if (err.code === 'ENOENT') {
     res.status(404)
     res.end('Not found')
+  } else if (err.statusCode) {
+    res.status(err.statusCode)
+    res.end(err.message)
   } else {
     res.status(500)
     res.end(err.message)
@@ -55,7 +58,9 @@ app.get(/\/(\d+)(?:x((\d+)))?(.\w+)?/, function (req, res, next) {
     , format = getFormat(req.params[2])
 
   if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
-    return next(new Error('Maximum dimension exceeded (' + MAX_DIMENSION +')'))
+    var err = new Error('Maximum dimension exceeded (' + MAX_DIMENSION +')')
+    err.statusCode = 400
+    return next(err)
   }
 
   gm(width, height, '#' + colour)
