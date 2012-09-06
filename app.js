@@ -51,4 +51,21 @@ app.get(/\/(\d+)x(\d+)(.\w+)?/, function (req, res, next) {
     })
 })
 
-app.listen(process.env.PORT || 9999)
+var server = app.listen(process.env.PORT || 9999, function () {
+
+  var address = 'http://' + server.address().address + ':' + server.address().port
+
+  console.log(
+    [ ''
+    , '  Placeholder image server running at: ' + address
+    , ''
+    , '  Some example links to try:'
+    , '  -  ' + address + '/500x300'
+    , '  -  ' + address + '/500x300.jpg?text=Image!'
+    , '  -  ' + address + '/500x300.jpg?color=c00&textColor=fff'
+    , ''
+    , '  For more examples and usage, see the readme: ' + address
+    , ''
+    ].join('\n'))
+
+})
