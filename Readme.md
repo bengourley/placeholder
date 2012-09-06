@@ -77,3 +77,11 @@ text 'Placeholder'
 
 - `/500x100.png?color=000&textColor=fff` gets you a .png with white text
 and a black background
+
+## Author
+[Ben Gourley](http://github.com/bengourley)
+
+## Licence
+Licenced under the [New BSD License](http://opensource.org/licenses/bsd-license.php)
+
+[View the source on GitHub](http://github.com/bengourley/placeholder)
