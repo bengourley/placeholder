@@ -69,24 +69,16 @@ http:// [hostname]:[port]/[width]x[height] [format] [?query=params]
 
 ### Examples
 
-- [/650x200](/650x200) gets you a 650x200 .png with black text and a
+- `/400x500` gets you a 400x500 .png with black text and a
 grey background
 
-![650x200](/650x200)
+- `/480x360.jpg?text=Placeholder` gets you a 480x360 .jpg displaying the
+text 'Placeholder'
 
-- [/650x300.jpg?text=Placeholder+Text](/650x300.jpg?text=Placeholder+Text) gets you a 650x300 .jpg displaying the
-text 'Placeholder Text'
-
-![650x300](/650x300.jpg?text=Placeholder+Text)
-
-- [/650x100.png?color=000&textColor=fff](/650x100.png?color=000&textColor=fff) gets you a .png with white text
+- `/500x100.png?color=000&textColor=fff` gets you a .png with white text
 and a black background
 
-![650x100](/650x100.png?color=000&textColor=fff)
-
-- [/250](/250) gets you a 250x250 image
-
-![250x250](/250)
+- `/250` gets you a 250x250 image
 
 ## Author
 [Ben Gourley](http://github.com/bengourley)
