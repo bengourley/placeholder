@@ -35,3 +35,12 @@ html
 
   body
     #container!=readme
+
+    #container
+      h2 Live Examples
+
+      each imgLink in [ '/650x200', '/650x300.jpg?text=Placeholder+Text', '/650x220.jpg?text=Pink!&color=ff00ff&textColor=fff', '/200', ]
+        a(href=imgLink)= imgLink
+        p 
+          a(href=imgLink)
+            img(src=imgLink)
