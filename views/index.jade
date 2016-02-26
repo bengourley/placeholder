@@ -1,9 +1,9 @@
-!!!5
+doctype
 html
   head
     meta(charset='utf-8')
     title Placeholder Image Generator
-    style
+    style.
       body {
         font-family: 'HelveticaNeue', 'Helvetica', Arial, sans-serif;
         font-size: 15px;
@@ -21,7 +21,7 @@ html
         padding: 0px 25px;
       }
 
-      pre, code {
+      pre {
         border: 1px solid #ccc;
         padding: 10px;
         border-radius: 3px;
@@ -29,10 +29,18 @@ html
         font-size: 14px;
         font-family: 'Monaco', monospace;
       }
-
       code {
         padding: 0px 3px;
       }
 
   body
     #container!=readme
+
+    #container
+      h2 Live Examples
+
+      each imgLink in [ '/650x200', '/650x300.jpg?text=Placeholder+Text', '/650x220.jpg?text=Pink!&color=ff00ff&textColor=fff', '/200', ]
+        a(href=imgLink)= imgLink
+        p 
+          a(href=imgLink)
+            img(src=imgLink)
