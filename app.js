@@ -1,16 +1,16 @@
 // Deps
 var express = require('express')
+  , morgan = require('morgan')
   , gm = require('gm')
-  , markdown = require('github-flavored-markdown').parse
+  , markdown = require('marked')
   , fs = require('fs')
-
-// Create server
-var app = express()
+  , app = express()
+  , server
 
 // Middleware
-app.use(express.logger('dev'))
-app.use(app.router)
-app.use(function errorHandler(err, req, res, next) {
+app.use(morgan('combined'))
+
+app.use(function errorHandler (err, req, res, next) {
   if (err.code === 'ENOENT') {
     res.status(404)
     res.end('Not found')
@@ -30,7 +30,7 @@ app.set('views', __dirname + '/views')
 /*
  * Sanitizes a file-type extension
  */
-function getFormat(f) {
+function getFormat (f) {
   switch (f) {
     case '.jpg': return 'jpeg'
     case '.gif': return 'gif'
@@ -56,9 +56,10 @@ app.get(/\/(\d+)(?:x((\d+)))?(.\w+)?/, function (req, res, next) {
     , text = req.query.text || (width + ' x ' + height)
     , textColour = req.query.textColor || req.query.textColour || '000'
     , format = getFormat(req.params[2])
+    , err
 
   if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
-    var err = new Error('Maximum dimension exceeded (' + MAX_DIMENSION +')')
+    err = new Error('Maximum dimension exceeded (' + MAX_DIMENSION + ')')
     err.statusCode = 400
     return next(err)
   }
@@ -91,24 +92,20 @@ app.get(/\/(\d+)(?:x((\d+)))?(.\w+)?/, function (req, res, next) {
     })
 })
 
-// Start the server on the given port, or default to 9999
-var server = app.listen(process.env.PORT || 9999, function () {
+// Start the server on the given port, or default to 0
+server = app.listen(process.env.PORT || 9999, function () {
 
   // Output some useful info
-
-  var address = 'http://' + server.address().address + ':' + server.address().port
+  var url = 'http://' + ((server.address().address === '::') ? '[::]' : server.address().address) + server.address().port
 
   console.log(
-    [ ''
-    , '  Placeholder image server running at: ' + address
-    , ''
-    , '  Some example links to try:'
-    , '  -  ' + address + '/500x300'
-    , '  -  ' + address + '/500x300.jpg?text=Image!'
-    , '  -  ' + address + '/500x300.jpg?color=c00&textColor=fff'
-    , ''
-    , '  For more examples and usage, see the readme: ' + address
-    , ''
-    ].join('\n'))
+ `Placeholder image server running at: ${url}
+
+  Some example links to try:
+  -  ${url}/500x300
+  -  ${url}/500x300.jpg?text=Image!
+  -  ${url}/500x300.jpg?color=c00&textColor=fff
+
+  For more examples and usage, see the readme: ${url}`)
 
 })
