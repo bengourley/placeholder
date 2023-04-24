@@ -42,7 +42,7 @@ function getFormat (f) {
 app.get('/', function (req, res, next) {
   fs.readFile(__dirname + '/Readme.md', 'utf-8', function (err, data) {
     if (err) return next(err)
-    res.render('index', { readme: markdown(data) })
+    res.render('index', { readme: markdown.parse(data) })
   })
 })
 
