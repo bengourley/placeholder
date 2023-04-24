@@ -2,17 +2,17 @@
   "name": "placeholder",
   "version": "2.0.0",
   "private": "true",
-  "license": "BSD",
+  "license": "MIT",
   "dependencies": {
-    "express": "^4.13.4",
-    "gm": "^1.21.1",
+    "express": "^4.18.2",
+    "gm": "^1.25.0",
     "jade": "^1.11.0",
-    "marked": "^0.3.5",
-    "morgan": "^1.7.0"
+    "marked": "^4.3.0",
+    "morgan": "^1.10.0"
   },
-  "engines" : {
-    "node" : ">=0.4.3.1",
-    "npm" : ">=2.14.20"
+  "engines": {
+    "node": ">=18.16.0",
+    "yarn": "~1"
   },
   "main": "app.js"
 }
