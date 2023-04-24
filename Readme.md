@@ -14,14 +14,14 @@ you your own private service, akin to [placehold.it](http://placehold.it) or [Du
 Clone this repo:
 
 ```
-git clone git@github.com:bengourley/placeholder.git
+git clone git@github.com:clocklimited/placeholder.git
 ```
 
 Install the npm dependencies:
 
 ```
 cd placeholder
-npm install
+yarn install
 ```
 
 Install GraphicsMagick. If you are on a Mac (If you are not on a Mac,
@@ -81,9 +81,9 @@ and a black background
 - `/250` gets you a 250x250 image
 
 ## Author
-[Ben Gourley](http://github.com/bengourley)
+[Clock Limited](https://github.com/clocklimited/)
 
-## Licence
-Licenced under the [New BSD License](http://opensource.org/licenses/bsd-license.php)
+## License
+Licensed under the [MIT](http://opensource.org/licenses/mit-license.php)
 
-[View the source on GitHub](http://github.com/bengourley/placeholder)
+[View the source on GitHub](http://github.com/clocklimited/placeholder)
